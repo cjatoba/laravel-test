@@ -1,62 +1,184 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Sobre o projeto
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto foi criado com base **[nesta vídeo aula](https://www.youtube.com/watch?v=f3tD-K796xo&list=PL7ScB28KYHhH35NubnZfP-9vegvOfUOoH&index=6)** do canal **[Beer and Code](https://www.youtube.com/channel/UCtz8hxpbicBe8REEdEtAYWA)** no Youtube, ele mostra como realizar testes (Feature, Unit e  Browser) utilizando o Laravel.
 
-## About Laravel
+Para facilitar consultas futuras, serão listados a seguir os passos seguidos no decorrer de todo conteúdo do vídeo (Com algumas pequenas adaptações adaptando a versão 8 do Laravel).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+O projeto foi desenvolvido utilizando o [Framework Laravel](https://laravel.com) na versão 8
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalação do projeto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Apesar de existirem outras formas de instalação, para este projeto será utilizado o Composer.
+- Criar um novo projeto utilizando o composer, digitando o comando abaixo no terminal: 
+```
+composer create-project --prefer-dist laravel/laravel laravel-test</code>
+```
 
-## Learning Laravel
+## Configurações
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Arquivo `phpunit.xml`:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Abrir o arquivo `phpunit.xml`, localizado na raiz do projeto, nele contém as configurações dos testes;
+- Verificar se a configuração do TELESCOPE_ENABLED está com o valor false:
+```xml
+<server name="TELESCOPE_ENABLED" value="false"/>
+```
+- Descomentar a configuração DB_CONNECTION:
+```xml
+<server name="DB_CONNECTION" value="sqlite"/>
+```
+- Descomentar a configuração DB_DATABASE (Cria um banco de dados apenas na memória RAM para não utilizar o banco físico):
+```xml
+<server name="DB_DATABASE" value=":memory:"/>
+```
 
-## Laravel Sponsors
+### Arquivo `.env`:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- Indicar o endereço correto em que o projeto será executado em APP_URL, ajustar caso for executado em um endereço ou porta diferente, como no exemplo abaixo onde será utilizada a porta 8000 utilizando o <code>artisan serve</code>:
+```
+APP_URL=http://localhost
+```
 
-### Premium Partners
+### Instalação do kit Laravel Breeze
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+O kit Laravel Breeze cria todas as rotas, views e migrates necessários par autendicação de usuários;
 
-## Contributing
+- Instalar o pacote Laravel Breeze:
+```
+composer require laravel/breeze --dev
+```
+- Publicar as visualizações de autenticação, rotas, controladores e outros recursos para seu aplicativo:
+```
+php artisan breeze:install
+```
+- Compilar seus ativos para que o arquivo CSS do seu aplicativo esteja disponível:
+```
+npm install
+npm run dev
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Execução do phpunit
 
-## Code of Conduct
+- O phpunit pode ser executado de duas formas, a partir do diretório `vendor/bin/phpunit`:
+```php
+vendor\bin\phpunit
+```
+ Ou utilizando o artisan:
+```php
+php artisan test
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Excluir os arquivos de exemplo de testes
 
-## Security Vulnerabilities
+- Apagar todos os arquivos das pastas `tests/Feature` e `tests/Unit`;
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Criação dos testes
 
-## License
+### Teste Feature
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Criar o teste via terminal, após a execução do comando será criado um arquivo na pasta `tests/Feature`:
+```
+php artisan make:test CustomerTest
+```
+
+- Executar um teste utilizando o comando:
+```
+php artisan make:test CustomerTest
+```
+
+- Se tudo estiver ok até aqui, a execução do comando acima vai gerar a saída abaixo:
+```
+PHPUnit 9.5.5 by Sebastian Bergmann and contributors.
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.331, Memory: 20.00 MB
+
+OK (1 test, 1 assertion)
+```
+
+- Por padrão do Laravel traz um teste de exemplo chamado test_example, vamos substituir este teste criando um para verificar se apenas usuários logados pode ver uma lista de clientes:
+```php
+public function only_logged_in_users_can_see_customers_list()
+    {
+        //Caso exista a tentativa de acesso a rota /curstomers
+        //sem que o usuário esteja logado, ele será direcionado
+        //para rota /login
+        $response = $this->get('/customers')
+            ->assertRedirect('/login');
+    }
+```
+
+- Criar uma base se teste no Mysql, no nosso caso a base se chamará laravel-test;
+- Alterar o arquivo `.env` informando o nome da base de dados que vamos utilizar:
+```
+DB_DATABASE=laravel-test
+```
+
+- No terminal executar o comando abaixo para pegar as novas configurações:
+```
+DB_DATABASE=laravel-test
+```
+
+- Criar as tabelas com base nas migrations:
+```
+php artisan migrate
+```
+
+- Neste momento ao realizar um teste com o comando <code>php artisan test</code> verificamos que o teste não passará, indicando que não há um usuário autenticado:
+```
+Warning: TTY mode is not supported on Windows platform.
+
+   FAIL  Tests\Feature\CustomerTest
+  ⨯ only logged in users can see customers list
+
+  ---
+
+  • Tests\Feature\CustomerTest > only logged in users can see customers list
+  Response status code [404] is not a redirect status code.
+  Failed asserting that false is true.
+
+  at C:\www\laravel-teste\tests\Feature\CustomerTest.php:22
+     18▕         //Caso exista a tentativa de acesso a rota /curstomers
+     19▕         //sem que o usuário esteja logado, ele será direcionado
+     20▕         //para rota /login
+     21▕         $response = $this->get('/customers')
+  ➜  22▕             ->assertRedirect('/login');
+     23▕     }
+     24▕ }
+     25▕
+
+  1   C:\www\laravel-teste\vendor\phpunit\phpunit\phpunit:61
+      PHPUnit\TextUI\Command::main()
+
+
+  Tests:  1 failed
+  Time:   1.78s
+```
+
+- Criar um Controller Customer:
+```
+php artisan make:controller CustomerController --resource
+```
+
+- Criar rotas no arquivo `web.php` na pasta `routes` apontando para o Controller `CustumerController`, o método resource já cria todas as rotas necessárias para o CRUD:
+```php
+Route::resource('/customers', CustomerController::class)->middleware(['auth']);
+```
+- Ao executar os testes novamente ele irá passar, pois desta vez as rotas foram criadas, permitindo o redirecionamento:
+```
+Warning: TTY mode is not supported on Windows platform.
+
+   PASS  Tests\Feature\CustomerTest
+  ✓ only logged in users can see customers list
+
+  Tests:  1 passed
+  Time:   0.28s
+```
+
+#### Filtrar/Executar métodos específico
+
+- Dentro de uma classe de testes podem existir vários métodos de testes, para executar um específico é necessário utilizar o parâmetro <code>--filter</code> seguido do nome do método:
+```
+php artisan test --filter test_only_logged_in_users_can_see_customers_list
+```
