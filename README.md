@@ -82,7 +82,7 @@ php artisan test
 <h2 id='testes'>Testes</h2>
 
 <h3 id='featuretest'>Feature test</h3>
-##### (Para testar uma parte maior do código, incluindo vários objetos que interagem entre si ou até mesmo uma solicitação HTTP completa para um endpoint JSON)
+<small>(Para testar uma parte maior do código, incluindo vários objetos que interagem entre si ou até mesmo uma solicitação HTTP completa para um endpoint JSON)</small>
 
 - Apagar todos os arquivos das pastas `tests/Feature` e `tests/Unit`;
 
@@ -193,8 +193,8 @@ Warning: TTY mode is not supported on Windows platform.
 php artisan test --filter test_only_logged_in_users_can_see_customers_list
 ```
 
-<h3 id='unittest'>Unit Test</h3> 
-##### (Voltado para partes pequenas e isoladas do código, como campos de um model)
+<h3 id='unittest'>Unit Test</h3>
+<small>(Voltado para partes pequenas e isoladas do código, como campos de um model)</small>
 
 - Criar uma nova classe de teste com o parâmetros `--unit`:
 ```
@@ -220,7 +220,7 @@ public function test_check_if_user_colums_is_correct()
 ```
 
 <h3 id='browsertest'>Browser Test</h3>
-##### (Testar envio de formulários, botões e outras ações)
+<small>(Testar envio de formulários, botões e outras ações)</small>
 
 - Instalar o pacote Dusk:
 ```
