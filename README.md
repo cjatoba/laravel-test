@@ -74,7 +74,7 @@ php artisan test
 
 ## Criação dos testes
 
-### Teste Feature (Podem testar uma parte maior do seu código, incluindo vários objetos que interagem entre si ou até mesmo uma solicitação HTTP completa para um endpoint JSON)
+### Teste Feature (Para testar uma parte maior do código, incluindo vários objetos que interagem entre si ou até mesmo uma solicitação HTTP completa para um endpoint JSON)
 
 - Criar o teste via terminal, após a execução do comando será criado um arquivo na pasta `tests/Feature`:
 ```
@@ -183,7 +183,7 @@ Warning: TTY mode is not supported on Windows platform.
 php artisan test --filter test_only_logged_in_users_can_see_customers_list
 ```
 
-## Testes unitários (Voltado para partes pequenas e isoladas do código)
+## Testes unitários (Voltado para partes pequenas e isoladas do código, como campos de um model)
 
 - Criar uma nova classe de teste com o parâmetros <code>--unit</code>:
 ```
@@ -206,6 +206,105 @@ public function test_check_if_user_colums_is_correct()
 
         $this->assertEquals(0, count($arrayCompared));
     }
+```
+
+## Browser Test (Testar envio de formulários, botões e outras ações)
+
+- Instalar o pacote Dusk:
+```
+composer require --dev laravel/dusk
+```
+
+- Instalar o Dusk:
+```
+php artisan dusk:install
+```
+
+- Criar um novo teste de browser para o cadastro de usuários, a classe será criada na pasta `tests/Browser`:
+```
+php artisan dusk:make RegisterUserTest
+```
+
+- Apagar a classe de teste de exemplo com o nome ExampleTest.php na pasta `tests/Browser`
+
+- Alterar o nome do método de teste:
+```php
+public function test_check_if_root_site_is_correct()
+    {
+        //Acessa a rota / do browser e verifica se exista o texto Laravel
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/')
+                    ->assertSee('Laravel');
+        });
+    }
+```
+
+- Rodar os testes com o comando abaixo:
+```
+php artisan dusk
+```
+
+- Para realizar testes utilizando a base de dados real, comentar as linhas abaixo no arquivo phpunit.xml:
+```xml
+<!-- <server name="DB_CONNECTION" value="sqlite"/>
+        <server name="DB_DATABASE" value=":memory:"/> -->
+```
+
+- Limpar o cache de configuração:
+```
+php artisan config:cache
+```
+
+- Criar um novo método de teste para testar  se a funcionalidade de login do usuário está funcionando:
+```php
+public function test_check_if_login_function_is_working(){
+        $this->browse(function (Browser $browser) {
+            //Navega até a rota /login
+            $browser->visit('/login')
+                //Digita no campo e-mail o valor teste@mail.com.br
+                ->type('email', 'teste@mail.com.br')
+                //Digita no campo password o valor password
+                ->type('password', 'password')
+                //Clica no botão Login
+                ->press('Login')
+                //Verifica se caiu na rota /home
+                ->assertPathIs('/home');
+        });
+    }
+```
+
+- Criar um método para testar se a funcionalidade de registro está funcionando:
+```php
+public function test_check_if_register_function_is_working(){
+        $this->browse(function (Browser $browser) {
+            //Navega até a rota /login
+            $browser->visit('/register')
+                //Digita no campo name o valor User Test
+                ->type('name', 'User Test2')
+                //Digita no campo e-mail o valor teste@mail.com.br
+                ->type('email', 'teste2@mail.com.br')
+                //Digita no campo password o valor password
+                ->type('password', 'password')
+                //Digita no campo password_confirmation o valor password
+                ->type('password_confirmation', 'password')
+                //Clica no botão Register
+                ->press('Register')
+                //Verifica se caiu na rota /home
+                ->assertPathIs('/home')
+                //Verifica se encontra o texto Dashboard
+                ->assertSee('Dashboard');
+        });
+    }
+```
+
+- Executar todos os testes já criados:
+```
+php artisan dusk
+```
+
+- Executar um método de teste em específico:
+```
+php artisan dusk --filter test_check_if_register_function_is_working
 ```
 
 ## Boas práticas
