@@ -1,4 +1,4 @@
-# Sobre o projeto
+# Testes com Laravel 8
 
 Este projeto foi criado com base **[nesta vídeo aula](https://www.youtube.com/watch?v=f3tD-K796xo&list=PL7ScB28KYHhH35NubnZfP-9vegvOfUOoH&index=6)** do canal **[Beer and Code](https://www.youtube.com/channel/UCtz8hxpbicBe8REEdEtAYWA)** no Youtube, ele mostra como realizar testes (Feature, Unit e  Browser) utilizando o Laravel.
 
@@ -113,6 +113,11 @@ public function only_logged_in_users_can_see_customers_list()
 - Alterar o arquivo `.env` informando o nome da base de dados que vamos utilizar:
 ```
 DB_DATABASE=laravel-test
+```
+
+- Limpar o cache da configuração
+```
+php artisan config:cache
 ```
 
 - Criar as tabelas com base nas migrations:
