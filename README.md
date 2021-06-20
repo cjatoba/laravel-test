@@ -1,12 +1,23 @@
-# Testes com Laravel 8
+# Testes com Laravel 8 (Unit, Feature e Browser)
 
 Este projeto foi criado com base **[nesta vídeo aula](https://www.youtube.com/watch?v=f3tD-K796xo&list=PL7ScB28KYHhH35NubnZfP-9vegvOfUOoH&index=6)** do canal **[Beer and Code](https://www.youtube.com/channel/UCtz8hxpbicBe8REEdEtAYWA)** no Youtube, ele mostra como realizar testes (Feature, Unit e  Browser) utilizando o Laravel.
 
-Para facilitar consultas futuras, serão listados a seguir os passos seguidos no decorrer de todo conteúdo do vídeo (Com algumas pequenas adaptações adaptando a versão 8 do Laravel).
+Para facilitar consultas futuras, serão listados a seguir os passos seguidos no decorrer de todo conteúdo do vídeo (Com algumas pequenas adaptações para versão 8 do Laravel).
 
-O projeto foi desenvolvido utilizando o [Framework Laravel](https://laravel.com) na versão 8
+- [Documentação do Laravel 8](https://laravel.com/docs/8.x)
 
-## Instalação do projeto
+<h2>Índice</h2>
+
+- <a href='#instalacao'>Instalação</a>
+- <a href='#configuracoes'>Configurações</a>
+- <a href='#execucaounit'>Execução do PHP Unit</a>
+- <a href='#testes'>Testes</a>
+    - <a href='#featuretest'>Feature Test</a>
+    - <a href='#unittest'>Unit Test</a>
+    - <a href='#browsertest'>Browser Test</a>
+- <a href='#boaspraticas'>Boas Práticas</a>
+
+<h2 id='instalacao'>Instalação do projeto</h2>
 
 Apesar de existirem outras formas de instalação, para este projeto será utilizado o Composer.
 - Criar um novo projeto utilizando o composer, digitando o comando abaixo no terminal: 
@@ -14,7 +25,7 @@ Apesar de existirem outras formas de instalação, para este projeto será utili
 composer create-project --prefer-dist laravel/laravel laravel-test
 ```
 
-## Configurações
+<h2 id='configuracoes'>Configurações</h2>
 
 ### Arquivo `phpunit.xml`:
 
@@ -34,7 +45,7 @@ composer create-project --prefer-dist laravel/laravel laravel-test
 
 ### Arquivo `.env`:
 
-- Indicar o endereço correto em que o projeto será executado em APP_URL, ajustar caso for executado em um endereço ou porta diferente, como no exemplo abaixo onde será utilizada a porta 8000 ao utilizar o <code>artisan serve</code>:
+- Indicar o endereço correto em que o projeto será executado em APP_URL, ajustar caso for executado em um endereço ou porta diferente, como no exemplo abaixo onde será utilizada a porta 8000 ao utilizar o `artisan serve`:
 ```
 APP_URL=http://localhost:8000
 ```
@@ -57,7 +68,7 @@ npm install
 npm run dev
 ```
 
-## Execução do phpunit
+<h2 id='execucaounit'>Execução do phpunit</h2>
 
 - O phpunit pode ser executado de duas formas, a partir do diretório `vendor/bin/phpunit`:
 ```php
@@ -68,14 +79,12 @@ vendor\bin\phpunit
 php artisan test
 ```
 
-## Excluir os arquivos de exemplo de testes
+<h2 id='testes'>Testes</h2>
+
+<h3 id='featuretest'>Feature test</h3>
+##### (Para testar uma parte maior do código, incluindo vários objetos que interagem entre si ou até mesmo uma solicitação HTTP completa para um endpoint JSON)
 
 - Apagar todos os arquivos das pastas `tests/Feature` e `tests/Unit`;
-
-## Criação dos testes
-
-### Feature test
-##### (Para testar uma parte maior do código, incluindo vários objetos que interagem entre si ou até mesmo uma solicitação HTTP completa para um endpoint JSON)
 
 - Criar o teste via terminal, após a execução do comando será criado um arquivo na pasta `tests/Feature`:
 ```
@@ -126,7 +135,7 @@ php artisan config:cache
 php artisan migrate
 ```
 
-- Neste momento ao realizar um teste com o comando <code>php artisan test</code> verificamos que o teste não passará, indicando que não há um usuário autenticado:
+- Neste momento ao realizar um teste com o comando `php artisan test` verificamos que o teste não passará, indicando que não há um usuário autenticado:
 ```
 Warning: TTY mode is not supported on Windows platform.
 
@@ -179,15 +188,15 @@ Warning: TTY mode is not supported on Windows platform.
 
 #### Filtrar/Executar métodos específico
 
-- Dentro de uma classe de testes podem existir vários métodos de testes, para executar um específico é necessário utilizar o parâmetro <code>--filter</code> seguido do nome do método:
+- Dentro de uma classe de testes podem existir vários métodos de testes, para executar um específico é necessário utilizar o parâmetro `--filter` seguido do nome do método:
 ```
 php artisan test --filter test_only_logged_in_users_can_see_customers_list
 ```
 
-## Unit test 
+<h3 id='unittest'>Unit Test</h3> 
 ##### (Voltado para partes pequenas e isoladas do código, como campos de um model)
 
-- Criar uma nova classe de teste com o parâmetros <code>--unit</code>:
+- Criar uma nova classe de teste com o parâmetros `--unit`:
 ```
 php artisan make:test UserTest --unit
 ```
@@ -210,7 +219,7 @@ public function test_check_if_user_colums_is_correct()
     }
 ```
 
-## Browser Test 
+<h3 id='browsertest'>Browser Test</h3>
 ##### (Testar envio de formulários, botões e outras ações)
 
 - Instalar o pacote Dusk:
@@ -310,6 +319,6 @@ php artisan dusk
 php artisan dusk --filter test_check_if_register_function_is_working
 ```
 
-## Boas práticas
+<h2 id='boaspraticas'>Boas práticas</h2>
 
 - O padrão de nome dos métodos de teste é UnitOfWork_StateUnderTest_ExpectedBehavior traduzindo UnidadeDeTrabalho_EstadoEmTeste_ComportamentoEsperado
