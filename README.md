@@ -41,7 +41,7 @@ APP_URL=http://localhost:8000
 
 ### Instalação do kit Laravel Breeze
 
-O kit Laravel Breeze cria todas as rotas, views e migrates necessários para autendicação de usuários;
+O kit Laravel Breeze cria todas as rotas, views e migrates necessários para autenticação de usuários;
 
 - Instalar o pacote Laravel Breeze:
 ```
@@ -74,7 +74,8 @@ php artisan test
 
 ## Criação dos testes
 
-### Teste Feature (Para testar uma parte maior do código, incluindo vários objetos que interagem entre si ou até mesmo uma solicitação HTTP completa para um endpoint JSON)
+### Feature test
+##### (Para testar uma parte maior do código, incluindo vários objetos que interagem entre si ou até mesmo uma solicitação HTTP completa para um endpoint JSON)
 
 - Criar o teste via terminal, após a execução do comando será criado um arquivo na pasta `tests/Feature`:
 ```
@@ -120,7 +121,7 @@ DB_DATABASE=laravel-test
 php artisan config:cache
 ```
 
-- Criar as tabelas com base nas migrations:
+- Criar as tabelas com base nas [migrations](https://laravel.com/docs/8.x/migrations#introduction):
 ```
 php artisan migrate
 ```
@@ -156,7 +157,7 @@ Warning: TTY mode is not supported on Windows platform.
   Time:   1.78s
 ```
 
-- Criar um Controller Customer:
+- Criar um Controller para execução dos nossos testes personalizados, neste caso com o nome Customer mas pode ser outro nome:
 ```
 php artisan make:controller CustomerController --resource
 ```
@@ -165,7 +166,7 @@ php artisan make:controller CustomerController --resource
 ```php
 Route::resource('/customers', CustomerController::class)->middleware(['auth']);
 ```
-- Ao executar os testes novamente ele irá passar, pois desta vez as rotas foram criadas, permitindo o redirecionamento:
+- Ao executar os testes novamente ele irá passar, pois desta vez as rotas foram criadas, e existe um middleware para proteger a lista de clientes:
 ```
 Warning: TTY mode is not supported on Windows platform.
 
@@ -183,7 +184,8 @@ Warning: TTY mode is not supported on Windows platform.
 php artisan test --filter test_only_logged_in_users_can_see_customers_list
 ```
 
-## Testes unitários (Voltado para partes pequenas e isoladas do código, como campos de um model)
+## Unit test 
+##### (Voltado para partes pequenas e isoladas do código, como campos de um model)
 
 - Criar uma nova classe de teste com o parâmetros <code>--unit</code>:
 ```
@@ -208,7 +210,8 @@ public function test_check_if_user_colums_is_correct()
     }
 ```
 
-## Browser Test (Testar envio de formulários, botões e outras ações)
+## Browser Test 
+##### (Testar envio de formulários, botões e outras ações)
 
 - Instalar o pacote Dusk:
 ```
@@ -244,7 +247,7 @@ public function test_check_if_root_site_is_correct()
 php artisan dusk
 ```
 
-- Para realizar testes utilizando a base de dados real, comentar as linhas abaixo no arquivo phpunit.xml:
+- Para realizar testes utilizando a base de dados real, comentar as linhas abaixo no arquivo `phpunit.xml`:
 ```xml
 <!-- <server name="DB_CONNECTION" value="sqlite"/>
         <server name="DB_DATABASE" value=":memory:"/> -->
