@@ -11,7 +11,7 @@ O projeto foi desenvolvido utilizando o [Framework Laravel](https://laravel.com)
 Apesar de existirem outras formas de instalação, para este projeto será utilizado o Composer.
 - Criar um novo projeto utilizando o composer, digitando o comando abaixo no terminal: 
 ```
-composer create-project --prefer-dist laravel/laravel laravel-test</code>
+composer create-project --prefer-dist laravel/laravel laravel-test
 ```
 
 ## Configurações
@@ -34,14 +34,14 @@ composer create-project --prefer-dist laravel/laravel laravel-test</code>
 
 ### Arquivo `.env`:
 
-- Indicar o endereço correto em que o projeto será executado em APP_URL, ajustar caso for executado em um endereço ou porta diferente, como no exemplo abaixo onde será utilizada a porta 8000 utilizando o <code>artisan serve</code>:
+- Indicar o endereço correto em que o projeto será executado em APP_URL, ajustar caso for executado em um endereço ou porta diferente, como no exemplo abaixo onde será utilizada a porta 8000 ao utilizar o <code>artisan serve</code>:
 ```
-APP_URL=http://localhost
+APP_URL=http://localhost:8000
 ```
 
 ### Instalação do kit Laravel Breeze
 
-O kit Laravel Breeze cria todas as rotas, views e migrates necessários par autendicação de usuários;
+O kit Laravel Breeze cria todas as rotas, views e migrates necessários para autendicação de usuários;
 
 - Instalar o pacote Laravel Breeze:
 ```
@@ -83,7 +83,7 @@ php artisan make:test CustomerTest
 
 - Executar um teste utilizando o comando:
 ```
-php artisan make:test CustomerTest
+php artisan test
 ```
 
 - Se tudo estiver ok até aqui, a execução do comando acima vai gerar a saída abaixo:
@@ -97,12 +97,12 @@ Time: 00:00.331, Memory: 20.00 MB
 OK (1 test, 1 assertion)
 ```
 
-- Por padrão do Laravel traz um teste de exemplo chamado test_example, vamos substituir este teste criando um para verificar se apenas usuários logados pode ver uma lista de clientes:
+- Por padrão o Laravel traz um teste de exemplo chamado test_example, vamos substituir este teste criando um para verificar se apenas usuários logados pode ver uma lista de clientes:
 ```php
 public function only_logged_in_users_can_see_customers_list()
     {
-        //Caso exista a tentativa de acesso a rota /curstomers
-        //sem que o usuário esteja logado, ele será direcionado
+        //Caso exista a tentativa de acesso a rota /customers
+        //sem que o usuário esteja logado, ele será redirecionado
         //para rota /login
         $response = $this->get('/customers')
             ->assertRedirect('/login');
@@ -111,11 +111,6 @@ public function only_logged_in_users_can_see_customers_list()
 
 - Criar uma base se teste no Mysql, no nosso caso a base se chamará laravel-test;
 - Alterar o arquivo `.env` informando o nome da base de dados que vamos utilizar:
-```
-DB_DATABASE=laravel-test
-```
-
-- No terminal executar o comando abaixo para pegar as novas configurações:
 ```
 DB_DATABASE=laravel-test
 ```
@@ -140,7 +135,7 @@ Warning: TTY mode is not supported on Windows platform.
 
   at C:\www\laravel-teste\tests\Feature\CustomerTest.php:22
      18▕         //Caso exista a tentativa de acesso a rota /curstomers
-     19▕         //sem que o usuário esteja logado, ele será direcionado
+     19▕         //sem que o usuário esteja logado, ele será redirecionado
      20▕         //para rota /login
      21▕         $response = $this->get('/customers')
   ➜  22▕             ->assertRedirect('/login');
