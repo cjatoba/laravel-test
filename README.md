@@ -74,7 +74,7 @@ php artisan test
 
 ## Criação dos testes
 
-### Teste Feature
+### Teste Feature (Podem testar uma parte maior do seu código, incluindo vários objetos que interagem entre si ou até mesmo uma solicitação HTTP completa para um endpoint JSON)
 
 - Criar o teste via terminal, após a execução do comando será criado um arquivo na pasta `tests/Feature`:
 ```
@@ -182,3 +182,32 @@ Warning: TTY mode is not supported on Windows platform.
 ```
 php artisan test --filter test_only_logged_in_users_can_see_customers_list
 ```
+
+## Testes unitários (Voltado para partes pequenas e isoladas do código)
+
+- Criar uma nova classe de teste com o parâmetros <code>--unit</code>:
+```
+php artisan make:test UserTest --unit
+```
+
+- Criar um método para checar se as colunas do model Users contém os campos name, email e password:
+```php
+public function test_check_if_user_colums_is_correct()
+    {
+        $user = new User;
+
+        $expected = [
+            'name',
+            'email',
+            'password'
+        ];
+
+        $arrayCompared = array_diff($expected, $user->getFillable());
+
+        $this->assertEquals(0, count($arrayCompared));
+    }
+```
+
+## Boas práticas
+
+- O padrão de nome dos métodos de teste é UnitOfWork_StateUnderTest_ExpectedBehavior traduzindo UnidadeDeTrabalho_EstadoEmTeste_ComportamentoEsperado
